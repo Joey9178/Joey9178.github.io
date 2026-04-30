@@ -21,6 +21,15 @@ nav{background:rgba(10,15,35,.85);backdrop-filter:blur(12px);border-bottom:1px s
 .container{max-width:1200px;margin:0 auto;padding:20px}
 .section-title{font-size:24px;margin:40px 0 20px;border-left:4px solid #00ccff;padding-left:12px}
 
+/* 新增游戏卡片样式 */
+.game-box{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:25px;margin-top:20px}
+.game-card{width:280px;padding:20px;background:rgba(20,25,50,.7);border:1px solid rgba(0,204,255,.3);border-radius:12px;cursor:pointer;transition:all 0.3s ease}
+.game-card:hover{transform:scale(1.03);box-shadow:0 0 20px rgba(0,204,255,.4);border-color:#00ccff}
+.game-card h3{color:#00ccff;margin-bottom:10px;font-size:18px}
+.game-card p{color:#ccc;font-size:14px;line-height:1.5;margin-bottom:15px}
+.game-card .play-btn{display:inline-block;padding:8px 16px;background:#00ccff;color:#050a1a;border-radius:6px;text-decoration:none;font-size:14px;font-weight:bold}
+.game-card .play-btn:hover{background:#0099cc;box-shadow:0 0 10px rgba(0,204,255,.6)}
+
 .author-box{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:20px}
 .author-card{text-align:center;padding:25px 35px;background:rgba(20,25,50,.7);border:1px solid rgba(0,204,255,.3);border-radius:12px;color:#00ccff;font-size:22px;cursor:pointer}
 .author-card:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(0,204,255,.4)}
@@ -30,6 +39,9 @@ nav{background:rgba(10,15,35,.85);backdrop-filter:blur(12px);border-bottom:1px s
 .popup h2{color:#00ccff;margin-bottom:20px}
 .popup p{color:#fff;font-size:18px;line-height:1.6}
 .close{margin-top:20px;padding:10px 20px;background:#00ccff;color:#000;border:none;border-radius:6px;cursor:pointer}
+/* 新增游戏弹窗样式 */
+.game-popup-content{max-width:600px;width:90%;text-align:left}
+.game-popup-content h2{text-align:center}
 
 footer{text-align:center;padding:30px;margin-top:60px;color:#666}
 </style>
@@ -54,7 +66,22 @@ footer{text-align:center;padding:30px;margin-top:60px;color:#666}
 
 <div class="container">
     <div class="section-title" id="game">🎮 在线游戏</div>
-    <div style="height:80px"></div>
+    <!-- 新增游戏列表 -->
+    <div class="game-box">
+        <!-- 游戏1 -->
+        <div class="game-card">
+            <h3>poki小游戏</h3>
+            <p>机房必玩小游戏，我们五（3）班的同学都爱玩</p>
+            <a href="https://https://poki.com/zh" target="_blank" class="play-btn">立即游玩</a>
+        </div>
+        <!-- 游戏2 -->
+        <div class="game-card">
+            <h3>4399小游戏</h3>
+            <p>这游戏网站我也是不用多说好吧</p>
+            <a href="https://WWW.4399.com" target="_blank" class="play-btn">立即游玩</a>
+        </div>
+        <!-- 游戏3 -->
+       
 
     <div class="section-title" id="setup">📦 游戏安装包</div>
     <div style="height:80px"></div>
@@ -72,7 +99,7 @@ footer{text-align:center;padding:30px;margin-top:60px;color:#666}
 
 <footer>© 2026 www.Joey91.com</footer>
 
-<!-- 弹窗 -->
+<!-- 作者弹窗 -->
 <div class="popup" id="popup">
     <div class="popup-content">
         <h2 id="name"></h2>
@@ -81,18 +108,50 @@ footer{text-align:center;padding:30px;margin-top:60px;color:#666}
     </div>
 </div>
 
+<!-- 新增游戏详情弹窗 -->
+<div class="popup" id="gamePopup">
+    <div class="popup-content game-popup-content">
+        <h2 id="gameName"></h2>
+        <p id="gameInfo"></p>
+        <p style="margin-top:10px;color:#00ccff">📌 游玩说明：</p>
+        <p id="gameTips" style="margin-top:5px"></p>
+        <a href="https://example.com/racing" target="_blank" class="play-btn" style="margin-top:15px;display:block;text-align:center;width:100%">立即游玩</a>
+        <button class="close" onclick="hideGamePopup()" style="margin-top:15px">关闭</button>
+    </div>
+</div>
+
 <script>
+// 作者弹窗逻辑
 function show(n){
     let pop=document.getElementById("popup");
     let name=document.getElementById("name");
     let info=document.getElementById("info");
-    if(n==1){name.innerText="王焯宇";info.innerText="超级大帅哥，颜值爆表，气质非凡！"}
-    if(n==2){name.innerText="易宏睿";info.innerText="超级大帅哥，阳光帅气，魅力无限！"}
-    if(n==3){name.innerText="姜明轩";info.innerText="超级大帅哥，英俊潇洒，气场超强！"}
+    if(n==1){name.innerText="王焯宇";info.innerText="四十八中五（3）班超级大帅哥，颜值爆表，气质非凡！"}
+    if(n==2){name.innerText="易宏睿";info.innerText="四十八中五（3）班超级大帅哥，阳光帅气，魅力无限！"}
+    if(n==3){name.innerText="姜明轩";info.innerText="四十八中五（3）班超级大帅哥，英俊潇洒，气场超强！"}
     pop.style.display="flex";
 }
 function hide(){
     document.getElementById("popup").style.display="none";
+}
+
+// 新增游戏弹窗逻辑
+function showGamePopup(n){
+    let pop=document.getElementById("gamePopup");
+    let gameName=document.getElementById("gameName");
+    let gameInfo=document.getElementById("gameInfo");
+    let gameTips=document.getElementById("gameTips");
+    
+    if(n==1){
+        gameName.innerText="poki";
+        gameInfo.innerText="太好玩了！";
+        gameTips.innerText="不玩的是Gay";
+    }
+    // 可扩展更多游戏的弹窗内容
+    pop.style.display="flex";
+}
+function hideGamePopup(){
+    document.getElementById("gamePopup").style.display="none";
 }
 
 // 简单粒子
