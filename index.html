@@ -1,168 +1,164 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>www.Joey91.com</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#050a1a;color:#fff;min-height:100vh}
-
-#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1}
-
-nav{background:rgba(10,15,35,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(100,120,255,.3);padding:16px 30px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
-.logo{font-size:24px;font-weight:bold;color:#00ccff;text-shadow:0 0 12px #00ccff}
-.nav-links a{color:#fff;margin:0 16px;text-decoration:none;font-size:16px}
-.nav-links a:hover{color:#00ccff;text-shadow:0 0 8px #00ccff}
-
-.banner{text-align:center;padding:60px 20px}
-.banner h1{font-size:36px;margin-bottom:10px;text-shadow:0 0 20px #00ccff}
-
-.container{max-width:1200px;margin:0 auto;padding:20px}
-.section-title{font-size:24px;margin:40px 0 20px;border-left:4px solid #00ccff;padding-left:12px}
-
-/* 新增游戏卡片样式 */
-.game-box{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:25px;margin-top:20px}
-.game-card{width:280px;padding:20px;background:rgba(20,25,50,.7);border:1px solid rgba(0,204,255,.3);border-radius:12px;cursor:pointer;transition:all 0.3s ease}
-.game-card:hover{transform:scale(1.03);box-shadow:0 0 20px rgba(0,204,255,.4);border-color:#00ccff}
-.game-card h3{color:#00ccff;margin-bottom:10px;font-size:18px}
-.game-card p{color:#ccc;font-size:14px;line-height:1.5;margin-bottom:15px}
-.game-card .play-btn{display:inline-block;padding:8px 16px;background:#00ccff;color:#050a1a;border-radius:6px;text-decoration:none;font-size:14px;font-weight:bold}
-.game-card .play-btn:hover{background:#0099cc;box-shadow:0 0 10px rgba(0,204,255,.6)}
-
-.author-box{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:20px}
-.author-card{text-align:center;padding:25px 35px;background:rgba(20,25,50,.7);border:1px solid rgba(0,204,255,.3);border-radius:12px;color:#00ccff;font-size:22px;cursor:pointer}
-.author-card:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(0,204,255,.4)}
-
-.popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:none;justify-content:center;align-items:center;z-index:999}
-.popup-content{background:#101830;padding:40px;border-radius:12px;border:2px solid #00ccff;text-align:center;max-width:400px;width:90%}
-.popup h2{color:#00ccff;margin-bottom:20px}
-.popup p{color:#fff;font-size:18px;line-height:1.6}
-.close{margin-top:20px;padding:10px 20px;background:#00ccff;color:#000;border:none;border-radius:6px;cursor:pointer}
-/* 新增游戏弹窗样式 */
-.game-popup-content{max-width:600px;width:90%;text-align:left}
-.game-popup-content h2{text-align:center}
-
-footer{text-align:center;padding:30px;margin-top:60px;color:#666}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.Joey91.com</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+        body{background:#050a1a;color:#fff;min-height:100vh}
+        
+        #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1}
+        
+        nav{background:rgba(10,15,35,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(100,120,255,.3);padding:16px 30px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
+        .logo{font-size:24px;font-weight:bold;color:#00ccff;text-shadow:0 0 12px #00ccff}
+        .nav-links a{color:#fff;margin:0 16px;text-decoration:none;font-size:16px}
+        .nav-links a:hover{color:#00ccff;text-shadow:0 0 8px #00ccff}
+        
+        .banner{text-align:center;padding:60px 20px}
+        .banner h1{font-size:36px;margin-bottom:10px;text-shadow:0 0 20px #00ccff}
+        
+        .container{max-width:1200px;margin:0 auto;padding:20px}
+        .section-title{font-size:24px;margin:40px 0 20px;border-left:4px solid #00ccff;padding-left:12px}
+        
+        .game-box{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:25px;margin-top:20px}
+        .game-card{width:280px;padding:20px;background:rgba(20,25,50,.7);border:1px solid rgba(0,204,255,.3);border-radius:12px;cursor:pointer;transition:all 0.3s ease}
+        .game-card:hover{transform:scale(1.03);box-shadow:0 0 20px rgba(0,204,255,.4);border-color:#00ccff}
+        .game-card h3{color:#00ccff;margin-bottom:10px;font-size:18px}
+        .game-card p{color:#ccc;font-size:14px;line-height:1.5;margin-bottom:15px}
+        .game-card .play-btn{display:inline-block;padding:8px 16px;background:#00ccff;color:#050a1a;border-radius:6px;text-decoration:none;font-size:14px;font-weight:bold}
+        .game-card .play-btn:hover{background:#0099cc;box-shadow:0 0 10px rgba(0,204,255,.6)}
+        
+        .author-box{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:20px}
+        .author-card{text-align:center;padding:25px 35px;background:rgba(20,25,50,.7);border:1px solid rgba(0,204,255,.3);border-radius:12px;color:#00ccff;font-size:22px;cursor:pointer}
+        .author-card:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(0,204,255,.4)}
+        
+        .popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:none;justify-content:center;align-items:center;z-index:999}
+        .popup-content{background:#101830;padding:40px;border-radius:12px;border:2px solid #00ccff;text-align:center;max-width:400px;width:90%}
+        .popup h2{color:#00ccff;margin-bottom:20px}
+        .popup p{color:#fff;font-size:18px;line-height:1.6}
+        .close{margin-top:20px;padding:10px 20px;background:#00ccff;color:#000;border:none;border-radius:6px;cursor:pointer}
+        .game-popup-content{max-width:600px;width:90%;text-align:left}
+        .game-popup-content h2{text-align:center}
+        
+        footer{text-align:center;padding:30px;margin-top:60px;color:#666}
+    </style>
 </head>
 
 <body>
-<div id="particles"></div>
-
-<!-- 这里我加好了：我做的安装包 -->
-<nav>
-    <div class="logo">www.Joey91.com</div>
-    <div class="nav-links">
-        <a href="#game">在线游戏</a>
-        <a href="#setup">游戏安装包</a>
-        <a href="#soft">实用软件</a>
-        <a href="#author">网站作者</a>
-        <a href="https://Joey9178.github.io/setup" target="_blank">我做的安装包</a>
-    </div>
-</nav>
-
-<div class="banner">
-    <h1>未来科技资源站</h1>
-</div>
-
-<div class="container">
-    <div class="section-title" id="game">🎮 在线游戏</div>
-    <!-- 新增游戏列表 -->
-    <div class="game-box">
-        <!-- 游戏1 -->
-        <div class="game-card">
-            <h3>poki小游戏</h3>
-            <p>机房必玩小游戏，我们五（3）班的同学都爱玩</p>
-            <a href="https://poki.com/zh" target="_blank" class="play-btn">立即游玩</a>
-        </div>
-        <!-- 游戏2 -->
-        <div class="game-card">
-            <h3>4399小游戏</h3>
-            <p>这游戏网站我也是不用多说好吧</p>
-            <a href="https://WWW.4399.com" target="_blank" class="play-btn">立即游玩</a>
-        </div>
-        <!-- 游戏3 -->
-       
-
-    <div class="section-title" id="setup">📦 游戏安装包</div>
-    <div style="height:80px"></div>
-
-    <div class="section-title" id="soft">🧰 实用软件</div>
-    <div style="height:80px"></div>
-
-    <div class="section-title" id="author">👤 网站作者</div>
-    <div class="author-box">
-        <div class="author-card" onclick="show(1)">王焯宇</div>
-        <div class="author-card" onclick="show(2)">易宏睿</div>
-        <div class="author-card" onclick="show(3)">姜明轩</div>
-    </div>
-</div>
-
-<footer>© 2026 www.Joey91.com</footer>
-
-<!-- 作者弹窗 -->
-<div class="popup" id="popup">
-    <div class="popup-content">
-        <h2 id="name"></h2>
-        <p id="info"></p>
-        <button class="close" onclick="hide()">关闭</button>
-    </div>
-</div>
-
-<!-- 新增游戏详情弹窗 -->
-<div class="popup" id="gamePopup">
-    <div class="popup-content game-popup-content">
-        <h2 id="gameName"></h2>
-        <p id="gameInfo"></p>
-        <p style="margin-top:10px;color:#00ccff">📌 游玩说明：</p>
-        <p id="gameTips" style="margin-top:5px"></p>
-        <a href="https://example.com/racing" target="_blank" class="play-btn" style="margin-top:15px;display:block;text-align:center;width:100%">立即游玩</a>
-        <button class="close" onclick="hideGamePopup()" style="margin-top:15px">关闭</button>
-    </div>
-</div>
-
-<script>
-// 作者弹窗逻辑
-function show(n){
-    let pop=document.getElementById("popup");
-    let name=document.getElementById("name");
-    let info=document.getElementById("info");
-    if(n==1){name.innerText="四十八中五（3）班超级大帅哥，颜值爆表，气质非凡！"}
-    if(n==2){name.innerText="四十八中五（3）班超级大帅哥，阳光帅气，魅力无限！"}
-    if(n==3){name.innerText="四十八中五（3）班超级大帅哥，英俊潇洒，气场超强！"}
-    pop.style.display="flex";
-}
-function hide(){
-    document.getElementById("popup").style.display="none";
-}
-
-// 新增游戏弹窗逻辑
-function showGamePopup(n){
-    let pop=document.getElementById("gamePopup");
-    let gameName=document.getElementById("gameName");
-    let gameInfo=document.getElementById("gameInfo");
-    let gameTips=document.getElementById("gameTips");
+    <div id="particles"></div>
     
-    if(n==1){
-        gameName.innerText="poki";
-        gameInfo.innerText="太好玩了！";
-        gameTips.innerText="不玩的是Gay";
-    }
-    // 可扩展更多游戏的弹窗内容
-    pop.style.display="flex";
-}
-function hideGamePopup(){
-    document.getElementById("gamePopup").style.display="none";
-}
-
-// 简单粒子
-const part=document.getElementById("particles");
-for(let i=0;i<50;i++){
-    let d=document.createElement("div");
-    d.style.cssText="position:absolute;width:3px;height:3px;background:#00ccff;border-radius:50%;opacity:"+(Math.random()*0.6+0.2)+";left:"+Math.random()*100+"%;top:"+Math.random()*100+"%;box-shadow:0 0 8px #00ccff";
-    part.appendChild(d);
-}
-</script>
+    <nav>
+        <div class="logo">www.Joey91.com</div>
+        <div class="nav-links">
+            <a href="#game">在线游戏</a>
+            <a href="#setup">游戏安装包</a>
+            <a href="#soft">实用软件</a>
+            <a href="#author">网站作者</a>
+            <a href="https://Joey9178.github.io/setup" target="_blank">我做的安装包</a>
+        </div>
+    </nav>
+    
+    <div class="banner">
+        <h1>未来科技资源站</h1>
+    </div>
+    
+    <div class="container">
+        <div class="section-title" id="game">🎮 在线游戏</div>
+        <div class="game-box">
+            <div class="game-card" onclick="showGamePopup(1)">
+                <h3>poki小游戏</h3>
+                <p>机房必玩小游戏，我们五（3）班的同学都爱玩</p>
+                <span class="play-btn">立即游玩</span>
+            </div>
+            <div class="game-card" onclick="showGamePopup(2)">
+                <h3>4399小游戏</h3>
+                <p>这游戏网站我也是不用多说好吧</p>
+                <span class="play-btn">立即游玩</span>
+            </div>
+            <div class="game-card" onclick="showGamePopup(3)">
+                <h3>更多游戏</h3>
+                <p>精彩游戏持续添加中...</p>
+                <span class="play-btn">敬请期待</span>
+            </div>
+        </div>
+        
+        <div class="section-title" id="setup">📦 游戏安装包</div>
+        <div style="height:80px"></div>
+        
+        <div class="section-title" id="soft">🧰 实用软件</div>
+        <div style="height:80px"></div>
+        
+        <div class="section-title" id="author">👤 网站作者</div>
+        <div class="author-box">
+            <div class="author-card" onclick="show(1)">王焯宇</div>
+            <div class="author-card" onclick="show(2)">易宏睿</div>
+            <div class="author-card" onclick="show(3)">姜明轩</div>
+        </div>
+    </div>
+    
+    <footer>© 2026 www.Joey91.com</footer>
+    
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h2 id="name"></h2>
+            <p id="info"></p>
+            <button class="close" onclick="hide()">关闭</button>
+        </div>
+    </div>
+    
+    <div class="popup" id="gamePopup">
+        <div class="popup-content game-popup-content">
+            <h2 id="gameName"></h2>
+            <p id="gameInfo"></p>
+            <p style="margin-top:10px;color:#00ccff">📌 游玩说明：</p>
+            <p id="gameTips" style="margin-top:5px"></p>
+            <a id="gameLink" href="#" target="_blank" class="play-btn" style="margin-top:15px;display:block;text-align:center;width:100%">立即游玩</a>
+            <button class="close" onclick="hideGamePopup()" style="margin-top:15px">关闭</button>
+        </div>
+    </div>
+    
+    <script>
+        const authorData = [
+            "四十八中五（3）班超级大帅哥，颜值爆表，气质非凡！",
+            "四十八中五（3）班超级大帅哥，阳光帅气，魅力无限！",
+            "四十八中五（3）班超级大帅哥，英俊潇洒，气场超强！"
+        ];
+        
+        const gameData = [
+            { name: "poki小游戏", info: "机房必玩小游戏，我们五（3）班的同学都爱玩！", tips: "点击上方按钮即可跳转到poki游戏平台", link: "https://poki.com/zh" },
+            { name: "4399小游戏", info: "经典小游戏平台，陪伴无数人成长！", tips: "点击上方按钮即可跳转到4399游戏平台", link: "https://WWW.4399.com" },
+            { name: "更多游戏", info: "精彩游戏持续添加中，敬请期待！", tips: "更多游戏即将上线", link: "" }
+        ];
+        
+        function show(n) {
+            document.getElementById("name").innerText = authorData[n - 1];
+            document.getElementById("popup").style.display = "flex";
+        }
+        
+        function hide() {
+            document.getElementById("popup").style.display = "none";
+        }
+        
+        function showGamePopup(n) {
+            const game = gameData[n - 1];
+            document.getElementById("gameName").innerText = game.name;
+            document.getElementById("gameInfo").innerText = game.info;
+            document.getElementById("gameTips").innerText = game.tips;
+            document.getElementById("gameLink").href = game.link || "#";
+            document.getElementById("gamePopup").style.display = "flex";
+        }
+        
+        function hideGamePopup() {
+            document.getElementById("gamePopup").style.display = "none";
+        }
+        
+        document.getElementById("popup").addEventListener("click", function(e) {
+            if (e.target === this) hide();
+        });
+        document.getElementById("gamePopup").addEventListener("click", function(e) {
+            if (e.target === this) hideGamePopup();
+        });
+    </script>
 </body>
 </html>
