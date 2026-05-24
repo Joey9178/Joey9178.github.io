@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -377,7 +376,7 @@
     <div id="updateToast" class="update-toast">
         <button class="close-toast" onclick="dismissUpdateToast()">✕ 知道了</button>
         <p>✨ <strong>网站更新啦！</strong><br>
-        🎮 新增「弹笔」游戏，课间指尖对决，等你来战！<br>
+        🎮 新增「和平精英模拟器」与「三角洲模拟器」，等你来战！<br>
         👤 作者栏新增「刘祖阳」同学，大家为他打call～<br>
         感谢支持 www.Joey91.com</p>
     </div>
@@ -412,12 +411,24 @@
                 <p>这游戏网站我也是不用多说好吧</p>
                 <span class="play-btn">立即游玩 →</span>
             </div>
-            <div class="game-card" onclick="showGamePopup(4)">
+            <div class="game-card" onclick="showGamePopup(3)">
                 <h3>✏️ 弹笔</h3>
                 <p>课间最强弹笔对决！指尖微操，一决高下，挑战全校弹笔之王</p>
                 <span class="play-btn">立即游玩 →</span>
             </div>
-            <div class="game-card" onclick="showGamePopup(3)">
+            <!-- 新增：和平精英模拟器 -->
+            <div class="game-card" onclick="showGamePopup(5)">
+                <h3>🔫 和平精英模拟器</h3>
+                <p>战场集结，枪战王者！体验最刺激的战术竞技，和好友一起巅峰对决！</p>
+                <span class="play-btn">立即游玩 →</span>
+            </div>
+            <!-- 新增：三角洲模拟器 -->
+            <div class="game-card" onclick="showGamePopup(6)">
+                <h3>⚙️ 三角洲模拟器</h3>
+                <p>经典枪战游戏，硬核射击体验！还原真实战场，感受枪林弹雨！</p>
+                <span class="play-btn">立即游玩 →</span>
+            </div>
+            <div class="game-card" onclick="showGamePopup(4)">
                 <h3>🌟 更多游戏</h3>
                 <p>精彩游戏持续添加中...</p>
                 <span class="play-btn">敬请期待</span>
@@ -498,16 +509,28 @@
                 link: "https://WWW.4399.com" 
             },
             { 
-                name: "🚀 更多游戏", 
+                name: "✏️ 弹笔大作战", 
+                info: "教室里的指尖竞技！弹笔游戏风靡全校，技巧与运气的对决。", 
+                tips: "点击下方按钮即可进入《弹笔》游戏世界，与好友比试弹指神功！", 
+                link: "https://joey9178.github.io/penplay/" 
+            },
+            { 
+                name: "🌟 更多游戏", 
                 info: "精彩游戏持续添加中，敬请期待！", 
                 tips: "新游戏即将上线，保持关注哦~", 
                 link: "" 
             },
             { 
-                name: "✏️ 弹笔大作战", 
-                info: "教室里的指尖竞技！弹笔游戏风靡全校，技巧与运气的对决。", 
-                tips: "点击下方按钮即可进入《弹笔》游戏世界，与好友比试弹指神功！", 
-                link: "https://joey9178.github.io/penplay/" 
+                name: "🔫 和平精英模拟器", 
+                info: "战场集结，枪战王者！体验最刺激的战术竞技，和好友一起巅峰对决！", 
+                tips: "点击下方按钮进入和平精英模拟器网页版，感受百人空降的竞技快感！", 
+                link: "https://joey9178.github.io/PUBGMobile/" 
+            },
+            { 
+                name: "⚙️ 三角洲模拟器", 
+                info: "经典枪战游戏，硬核射击体验！还原真实战场，感受枪林弹雨！", 
+                tips: "点击下方按钮进入三角洲模拟器，重温经典战役，成为顶尖战士！", 
+                link: "https://joey9178.github.io/DeltaForce/" 
             }
         ];
         
@@ -596,7 +619,7 @@
             if (e.target === this) hideCodePopup();
         });
         
-        console.log("✅ 网站已更新 | 新增弹笔游戏 + 作者刘祖阳 + 三位同学夸奖词升级");
+        console.log("✅ 网站已更新 | 新增和平精英模拟器、三角洲模拟器 + 刘祖阳同学 + 夸奖词升级");
     </script>
 </body>
 </html>
