@@ -377,7 +377,7 @@
         <button class="close-toast" onclick="dismissUpdateToast()">✕ 知道了</button>
         <p>✨ <strong>网站更新啦！</strong><br>
         🎮 新增「和平精英模拟器」与「三角洲模拟器」，等你来战！<br>
-        👤 作者栏新增「刘祖阳」同学，大家为他打call～<br>
+        👥 作者栏新增9位优秀同学，欢迎他们加入！<br>
         感谢支持 www.Joey91.com</p>
     </div>
     
@@ -416,13 +416,11 @@
                 <p>课间最强弹笔对决！指尖微操，一决高下，挑战全校弹笔之王</p>
                 <span class="play-btn">立即游玩 →</span>
             </div>
-            <!-- 新增：和平精英模拟器 -->
             <div class="game-card" onclick="showGamePopup(5)">
                 <h3>🔫 和平精英模拟器</h3>
                 <p>战场集结，枪战王者！体验最刺激的战术竞技，和好友一起巅峰对决！</p>
                 <span class="play-btn">立即游玩 →</span>
             </div>
-            <!-- 新增：三角洲模拟器 -->
             <div class="game-card" onclick="showGamePopup(6)">
                 <h3>⚙️ 三角洲模拟器</h3>
                 <p>经典枪战游戏，硬核射击体验！还原真实战场，感受枪林弹雨！</p>
@@ -443,10 +441,21 @@
         
         <div class="section-title" id="author">👤 网站作者</div>
         <div class="author-box">
+            <!-- 原有四位作者 -->
             <div class="author-card" onclick="show(1)">王焯宇</div>
             <div class="author-card" onclick="show(2)">易宏睿</div>
             <div class="author-card" onclick="show(3)">姜明轩</div>
             <div class="author-card" onclick="show(4)">刘祖阳</div>
+            <!-- 新增作者卡片 -->
+            <div class="author-card" onclick="show(5)">胡瀚予</div>
+            <div class="author-card" onclick="show(6)">范亦琛</div>
+            <div class="author-card" onclick="show(7)">范亦茹</div>
+            <div class="author-card" onclick="show(8)">李仪佳</div>
+            <div class="author-card" onclick="show(9)">肖凯文</div>
+            <div class="author-card" onclick="show(10)">孙弘瀚</div>
+            <div class="author-card" onclick="show(11)">陶承易</div>
+            <div class="author-card" onclick="show(12)">郑梦萱</div>
+            <div class="author-card" onclick="show(13)">尹世好</div>
         </div>
     </div>
     
@@ -487,12 +496,21 @@
     </div>
     
     <script>
-        // 作者信息数组，前三项已大幅扩充，第四项保持原有风格
+        // 作者信息数组（原有4位 + 新增9位）
         const authorMessages = [
             "✨ 王焯宇同学，四十八中五（3）班超级大帅哥，颜值爆表，气质非凡！不仅如此，他还才华横溢，乐于助人，是班级里的开心果，运动场上也活力四射，深受老师和同学们的喜爱！✨",
             "⚡ 易宏睿同学，阳光帅气，魅力无限！他思维敏捷，课堂表现积极，总能用独特的见解带动班级讨论。同时他还擅长编程与绘画，是一位全面发展的未来之星！⚡",
             "🔥 姜明轩同学，英俊潇洒，气场超强！他热爱阅读，知识渊博，出口成章，是班级里的小小百科全书。性格沉稳可靠，总能在关键时刻给出最棒的建议，大家都很信赖他！🔥",
-            "🧠 刘祖阳同学，天资聪颖，学习刻苦，成绩优异，是大家公认的学霸榜样！未来可期，光芒万丈！ 🌟"
+            "🧠 刘祖阳同学，天资聪颖，学习刻苦，成绩优异，是大家公认的学霸榜样！未来可期，光芒万丈！ 🌟",
+            "🌸 胡瀚予同学，文静优雅，举止大方，如春风般温暖人心。她总是安静地阅读、思考，用温柔的力量感染着身边的每一个人，是一位内涵丰富、令人敬佩的才女。🌸",
+            "🛡️ 范亦琛同学，踏实稳重，做事认真可靠。无论学习还是生活，他都一步一个脚印，从不浮躁，是班级里最让人放心的“定海神针”，值得大家学习！🛡️",
+            "🔍 范亦茹同学，专注力超群，一旦投入便心无旁骛。她对待学习和任务极度认真，总能深入钻研，获得卓越的成果，是“专心致志”的最佳代言人。🔍",
+            "💖 李仪佳同学，漂亮大方，气质出众，是班级里一道亮丽的风景线。但她从不骄傲，乐于助人，心灵与外表一样美丽，深受大家喜爱。💖",
+            "🏀 肖凯文同学，自信阳光，充满活力。他勇于表达自己，敢于迎接挑战，在球场上和课堂上都散发着领袖魅力，是大家心中的“自信之星”。🏀",
+            "📚 孙弘瀚同学，作为班长，他尽职尽责，公平公正，是老师的好帮手，同学的好榜样。他不仅管理能力强，学习也十分优秀，带领班级不断前进！📚",
+            "📖 陶承易同学，语文功底深厚，出口成章，作文屡屡被当作范文。他热爱古诗词，熟读经典，是班级里的“语文小才子”，令人钦佩。📖",
+            "✍️ 郑梦萱同学，语文课代表，工作认真细致，责任心极强。她自己的语文成绩优异，还能耐心帮助同学解答问题，是老师的得力助手。✍️",
+            "⏳ 尹世好同学，认真专心，做事一丝不苟。他对待每一件事都全力以赴，从不马虎，这种钻研精神让他在学业上不断进步，值得大家学习！⏳"
         ];
         
         const gameData = [
@@ -540,6 +558,15 @@
             else if(index === 2) nameText = "易宏睿";
             else if(index === 3) nameText = "姜明轩";
             else if(index === 4) nameText = "刘祖阳";
+            else if(index === 5) nameText = "胡瀚予";
+            else if(index === 6) nameText = "范亦琛";
+            else if(index === 7) nameText = "范亦茹";
+            else if(index === 8) nameText = "李仪佳";
+            else if(index === 9) nameText = "肖凯文";
+            else if(index === 10) nameText = "孙弘瀚";
+            else if(index === 11) nameText = "陶承易";
+            else if(index === 12) nameText = "郑梦萱";
+            else if(index === 13) nameText = "尹世好";
             else nameText = "神秘作者";
             
             const msg = authorMessages[index - 1] || "四十八中五（3）班优秀成员！";
@@ -619,7 +646,7 @@
             if (e.target === this) hideCodePopup();
         });
         
-        console.log("✅ 网站已更新 | 新增和平精英模拟器、三角洲模拟器 + 刘祖阳同学 + 夸奖词升级");
+        console.log("✅ 网站已更新 | 新增和平精英模拟器、三角洲模拟器 + 新增9位优秀作者");
     </script>
 </body>
 </html>
