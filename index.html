@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -213,6 +214,21 @@
             font-size: 18px;
             line-height: 1.5;
         }
+        .team-members {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .team-member {
+            background: rgba(0, 204, 255, 0.15);
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 16px;
+            color: #ccf;
+            border: 1px solid rgba(0,204,255,0.3);
+        }
         .close {
             margin-top: 24px;
             padding: 10px 24px;
@@ -352,6 +368,43 @@
             color: #050a1a;
         }
         
+        /* 六一儿童节弹窗专属样式 */
+        .festival-popup-content, .festival-info-popup-content {
+            background: linear-gradient(135deg, #1e2a5e, #0f172a);
+            border: 2px solid #ffaa44;
+            box-shadow: 0 0 30px rgba(255, 170, 68, 0.4);
+            max-width: 480px;
+        }
+        .festival-popup-content h2, .festival-info-popup-content h2 {
+            color: #ffcc66;
+            text-shadow: 0 0 10px #ffaa44;
+            font-size: 32px;
+        }
+        .festival-message, .festival-info-message {
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+        .festival-emoji {
+            font-size: 48px;
+            margin: 10px 0;
+            letter-spacing: 8px;
+        }
+        .festival-btn {
+            background: #ffaa44;
+            color: #1e2a5e;
+            box-shadow: 0 0 12px #ffaa44;
+        }
+        .festival-btn:hover {
+            background: #ffcc66;
+            box-shadow: 0 0 18px #ffaa44;
+        }
+        .info-text {
+            text-align: left;
+            color: #eef;
+            margin: 10px 0;
+        }
+        
         footer {
             text-align: center;
             padding: 35px 20px;
@@ -367,6 +420,9 @@
             .nav-links a { margin: 0 8px; font-size: 14px; }
             .logo { font-size: 20px; }
             .update-toast { bottom: 15px; right: 15px; left: 15px; max-width: none; width: auto; }
+            .team-member { font-size: 14px; padding: 4px 10px; }
+            .festival-popup-content h2, .festival-info-popup-content h2 { font-size: 26px; }
+            .festival-message, .festival-info-message { font-size: 16px; }
         }
     </style>
 </head>
@@ -378,6 +434,7 @@
         <p>✨ <strong>网站更新啦！</strong><br>
         🎮 新增「和平精英模拟器」与「三角洲模拟器」，等你来战！<br>
         👥 作者栏新增9位优秀同学，欢迎他们加入！<br>
+        🧑‍💻 新增「开发团队」菜单，快来看看我们的团队吧！<br>
         感谢支持 www.Joey91.com</p>
     </div>
     
@@ -388,6 +445,7 @@
             <a href="#setup">游戏安装包</a>
             <a href="#soft">实用软件</a>
             <a href="#author">网站作者</a>
+            <a onclick="showTeamPopup()">开发团队</a>
             <a href="https://Joey9178.github.io/setup" target="_blank">我做的安装包</a>
             <a onclick="showCodePopup()">🔐 对暗号</a>
         </div>
@@ -461,6 +519,7 @@
     
     <footer>© 2026 www.Joey91.com | 探索未来 智趣同行</footer>
     
+    <!-- 作者详情弹窗 -->
     <div class="popup" id="popup">
         <div class="popup-content">
             <h2 id="name"></h2>
@@ -469,6 +528,7 @@
         </div>
     </div>
     
+    <!-- 游戏详情弹窗 -->
     <div class="popup" id="gamePopup">
         <div class="popup-content game-popup-content">
             <h2 id="gameName"></h2>
@@ -480,6 +540,7 @@
         </div>
     </div>
     
+    <!-- 暗号弹窗 -->
     <div class="popup" id="codePopup">
         <div class="popup-content">
             <h2>🎤 对暗号</h2>
@@ -492,6 +553,51 @@
                 <p class="error-message" id="errorMsg">❌ 暗号不对，再试一次！</p>
             </div>
             <button class="close" onclick="hideCodePopup()">关闭</button>
+        </div>
+    </div>
+    
+    <!-- 开发团队弹窗 -->
+    <div class="popup" id="teamPopup">
+        <div class="popup-content">
+            <h2>🧑‍💻 我们的团队</h2>
+            <div id="teamMembersList" class="team-members">
+                <!-- 动态填充团队成员 -->
+            </div>
+            <button class="close" onclick="hideTeamPopup()">关闭</button>
+        </div>
+    </div>
+    
+    <!-- 六一儿童节祝福弹窗 -->
+    <div class="popup" id="festivalPopup">
+        <div class="popup-content festival-popup-content">
+            <div class="festival-emoji">🎈🍭🎁🎉</div>
+            <h2>✨ 六一儿童节快乐 ✨</h2>
+            <div class="festival-message">
+                <p>🌸 愿所有大朋友、小朋友 🌸<br>
+                永葆童心，天真烂漫<br>
+                梦想闪闪发光，快乐无边无际！<br>
+                🎈 在这个属于你的日子里 🎈<br>
+                吃一颗糖，笑一笑，世界都甜了~</p>
+            </div>
+            <div class="festival-emoji">🎠🍬🎈🤹</div>
+            <button class="close festival-btn" onclick="showFestivalInfo()">开心收下 🎁</button>
+        </div>
+    </div>
+    
+    <!-- 六一儿童节简介弹窗 -->
+    <div class="popup" id="festivalInfoPopup">
+        <div class="popup-content festival-info-popup-content">
+            <div class="festival-emoji">📖🎈✨</div>
+            <h2>📚 六一儿童节小百科</h2>
+            <div class="festival-info-message info-text">
+                <p><strong>📅 日期：</strong>每年6月1日</p>
+                <p><strong>🌍 由来：</strong>为了悼念1942年捷克利迪策惨案和全世界所有在战争中死难的儿童，反对虐杀和毒害儿童，保障儿童权利，1949年11月国际民主妇女联合会决定设立。</p>
+                <p><strong>🎉 意义：</strong>保障世界各国儿童的生存权、保健权、受教育权和抚养权，改善儿童生活，反对虐待儿童。</p>
+                <p><strong>🇨🇳 中国：</strong>1950年6月1日，新中国第一个国际儿童节庆祝活动在北京举行，此后每年6月1日成为全国孩子们的盛大节日。</p>
+                <p><strong>🍭 传统活动：</strong>学校文艺汇演、游园会、收到礼物、吃大餐，这一天每个孩子都是主角！</p>
+            </div>
+            <div class="festival-emoji">🎁🍬🎈🎉</div>
+            <button class="close festival-btn" onclick="closeFestivalInfoPopup()">我知道啦 ✅</button>
         </div>
     </div>
     
@@ -511,6 +617,12 @@
             "📖 陶承易同学，语文功底深厚，出口成章，作文屡屡被当作范文。他热爱古诗词，熟读经典，是班级里的“语文小才子”，令人钦佩。📖",
             "✍️ 郑梦萱同学，语文课代表，工作认真细致，责任心极强。她自己的语文成绩优异，还能耐心帮助同学解答问题，是老师的得力助手。✍️",
             "⏳ 尹世好同学，认真专心，做事一丝不苟。他对待每一件事都全力以赴，从不马虎，这种钻研精神让他在学业上不断进步，值得大家学习！⏳"
+        ];
+        
+        // 团队成员列表（排除易宏睿、姜明轩）
+        const teamMembers = [
+            "王焯宇", "刘祖阳", "胡瀚予", "范亦琛", "范亦茹",
+            "李仪佳", "肖凯文", "孙弘瀚", "陶承易", "郑梦萱", "尹世好"
         ];
         
         const gameData = [
@@ -628,6 +740,41 @@
             }
         }
         
+        function showTeamPopup() {
+            const container = document.getElementById("teamMembersList");
+            container.innerHTML = "";
+            teamMembers.forEach(member => {
+                const span = document.createElement("span");
+                span.className = "team-member";
+                span.textContent = member;
+                container.appendChild(span);
+            });
+            document.getElementById("teamPopup").style.display = "flex";
+        }
+        
+        function hideTeamPopup() {
+            document.getElementById("teamPopup").style.display = "none";
+        }
+        
+        // 六一儿童节相关逻辑
+        function showFestivalInfo() {
+            // 关闭祝福弹窗
+            document.getElementById("festivalPopup").style.display = "none";
+            // 显示简介弹窗
+            document.getElementById("festivalInfoPopup").style.display = "flex";
+        }
+        
+        function closeFestivalInfoPopup() {
+            document.getElementById("festivalInfoPopup").style.display = "none";
+        }
+        
+        function showFestivalPopup() {
+            if (!sessionStorage.getItem("festivalShown")) {
+                document.getElementById("festivalPopup").style.display = "flex";
+                sessionStorage.setItem("festivalShown", "true");
+            }
+        }
+        
         function dismissUpdateToast() {
             const toast = document.getElementById('updateToast');
             toast.classList.add('hide');
@@ -636,6 +783,7 @@
             }, 300);
         }
         
+        // 点击弹窗背景关闭
         document.getElementById("popup").addEventListener("click", function(e) {
             if (e.target === this) hide();
         });
@@ -645,8 +793,22 @@
         document.getElementById("codePopup").addEventListener("click", function(e) {
             if (e.target === this) hideCodePopup();
         });
+        document.getElementById("teamPopup").addEventListener("click", function(e) {
+            if (e.target === this) hideTeamPopup();
+        });
+        document.getElementById("festivalPopup").addEventListener("click", function(e) {
+            if (e.target === this) document.getElementById("festivalPopup").style.display = "none";
+        });
+        document.getElementById("festivalInfoPopup").addEventListener("click", function(e) {
+            if (e.target === this) closeFestivalInfoPopup();
+        });
         
-        console.log("✅ 网站已更新 | 新增和平精英模拟器、三角洲模拟器 + 新增9位优秀作者");
+        // 页面加载完成后显示儿童节祝福弹窗
+        window.addEventListener("load", function() {
+            showFestivalPopup();
+        });
+        
+        console.log("✅ 网站已更新 | 新增和平精英模拟器、三角洲模拟器 + 新增9位优秀作者 + 开发团队菜单 + 六一儿童节弹窗及简介");
     </script>
 </body>
 </html>
