@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -54,6 +53,7 @@
         .nav-links {
             display: flex;
             flex-wrap: wrap;
+            align-items: center;
             gap: 8px;
         }
         .nav-links a {
@@ -67,6 +67,113 @@
         .nav-links a:hover {
             color: #00ccff;
             text-shadow: 0 0 8px #00ccff;
+        }
+        
+        /* ===== 新增：登录用户样式 ===== */
+        .user-area {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px 4px 8px;
+            border-radius: 40px;
+            background: rgba(0, 204, 255, 0.1);
+            border: 1px solid rgba(0, 204, 255, 0.3);
+            transition: 0.3s;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+        .user-area:hover {
+            background: rgba(0, 204, 255, 0.2);
+            border-color: #00ccff;
+        }
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #00ccff;
+            color: #050a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .user-name {
+            font-size: 14px;
+            color: #eee;
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .logout-btn {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 0 4px;
+        }
+        .logout-btn:hover {
+            color: #ff9999;
+        }
+        .login-link {
+            color: #00ccff !important;
+            font-weight: bold !important;
+        }
+        .login-link:hover {
+            text-shadow: 0 0 12px #00ccff !important;
+        }
+        /* ===== 新增：头像上传样式 ===== */
+        .file-upload-wrapper {
+            margin: 12px 0;
+            text-align: left;
+        }
+        .file-upload-wrapper label {
+            display: block;
+            margin-bottom: 4px;
+            color: #88aaff;
+            font-size: 14px;
+        }
+        .file-upload-wrapper input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px dashed rgba(0,204,255,0.4);
+            border-radius: 12px;
+            background: rgba(10,15,35,0.5);
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .file-upload-wrapper input[type="file"]::-webkit-file-upload-button {
+            background: #00ccff;
+            color: #050a1a;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .avatar-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #00ccff;
+            margin: 10px auto;
+            overflow: hidden;
+            border: 2px solid #00ccff;
+        }
+        .avatar-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         .banner {
@@ -448,6 +555,17 @@
             <a onclick="showTeamPopup()">开发团队</a>
             <a href="https://Joey9178.github.io/setup" target="_blank">我做的安装包</a>
             <a onclick="showCodePopup()">🔐 对暗号</a>
+            <!-- ===== 新增：登录/用户区域 ===== -->
+            <span id="userAreaContainer">
+                <a id="loginBtn" class="login-link" onclick="showLoginPopup()">登录</a>
+                <span id="userInfoDisplay" style="display:none; align-items:center; gap:6px;">
+                    <span class="user-area" onclick="showProfilePopup()">
+                        <span class="user-avatar" id="userAvatar">👤</span>
+                        <span class="user-name" id="userDisplayName">用户</span>
+                    </span>
+                    <button class="logout-btn" onclick="handleLogout()">退出</button>
+                </span>
+            </span>
         </div>
     </nav>
     
@@ -601,6 +719,48 @@
         </div>
     </div>
     
+    <!-- ===== 新增：登录弹窗 ===== -->
+    <div class="popup" id="loginPopup">
+        <div class="popup-content" style="max-width: 400px;">
+            <h2>🔑 登录 / 注册</h2>
+            <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
+                <input type="email" id="loginEmail" placeholder="邮箱地址" style="width:100%; padding:12px; border-radius:16px; border:1px solid rgba(0,204,255,0.4); background:rgba(10,15,35,0.7); color:#fff; font-size:15px;">
+                <input type="password" id="loginPassword" placeholder="密码" style="width:100%; padding:12px; border-radius:16px; border:1px solid rgba(0,204,255,0.4); background:rgba(10,15,35,0.7); color:#fff; font-size:15px;">
+                <div id="loginError" style="color:#ff6b6b; font-size:14px; min-height:24px;"></div>
+                <div style="display:flex; gap:10px;">
+                    <button id="loginSubmitBtn" class="close" style="flex:1;">登录</button>
+                    <button id="signupSubmitBtn" class="close" style="flex:1; background:#2a3a6a;">注册</button>
+                </div>
+                <p style="color:#88aaff; font-size:13px; margin-top:8px;">注册后将收到验证邮件，请点击确认。</p>
+            </div>
+            <button class="close" onclick="hideLoginPopup()" style="margin-top: 16px; background:#444;">关闭</button>
+        </div>
+    </div>
+    
+    <!-- ===== 新增：个人信息弹窗 ===== -->
+    <div class="popup" id="profilePopup">
+        <div class="popup-content" style="max-width: 420px;">
+            <h2>👤 个人信息</h2>
+            <div style="margin: 16px 0;">
+                <div class="avatar-preview" id="profileAvatarPreview">
+                    <img id="profileAvatarImg" src="" alt="头像">
+                </div>
+                <div class="file-upload-wrapper">
+                    <label>更换头像（上传图片）</label>
+                    <input type="file" id="avatarFile" accept="image/*" onchange="previewAvatar(event)">
+                </div>
+                <div style="text-align:left; margin-top:12px;">
+                    <label style="color:#88aaff; font-size:14px;">昵称</label>
+                    <input type="text" id="profileNickname" placeholder="输入昵称" style="width:100%; padding:12px; border-radius:16px; border:1px solid rgba(0,204,255,0.4); background:rgba(10,15,35,0.7); color:#fff; font-size:15px; margin-top:4px;">
+                </div>
+                <div id="profileError" style="color:#ff6b6b; font-size:14px; min-height:24px; margin-top:8px;"></div>
+                <button id="saveProfileBtn" class="close" style="width:100%; margin-top:16px;">保存修改</button>
+                <button onclick="hideProfilePopup()" class="close" style="width:100%; margin-top:8px; background:#444;">关闭</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ===== 原有脚本（未改动） ===== -->
     <script>
         // 作者信息数组（原有4位 + 新增9位）
         const authorMessages = [
@@ -809,6 +969,231 @@
         });
         
         console.log("✅ 网站已更新 | 新增和平精英模拟器、三角洲模拟器 + 新增9位优秀作者 + 开发团队菜单 + 六一儿童节弹窗及简介");
+    </script>
+    
+    <!-- ===== 新增：Supabase 登录功能（独立模块，不影响原有功能） ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ============================================================
+        // Supabase 登录功能（完全独立，不影响其他任何功能）
+        // ============================================================
+        
+        // ---- 初始化 Supabase ----
+        const SUPABASE_URL = 'https://exffyqocxiojafkosoqr.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4ZmZ5cW9jeGlvamZma29zb3FyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM4MjM5NjQsImV4cCI6MjA5OTM5OTk2NH0.2d_ijkQnBhncmsLapiNaKwAkiyGLk7fCLUlbEyA2a3M';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // ---- DOM 元素 ----
+        const loginBtn = document.getElementById('loginBtn');
+        const userInfoDisplay = document.getElementById('userInfoDisplay');
+        const userAvatar = document.getElementById('userAvatar');
+        const userDisplayName = document.getElementById('userDisplayName');
+        const loginPopup = document.getElementById('loginPopup');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginError = document.getElementById('loginError');
+        const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+        const signupSubmitBtn = document.getElementById('signupSubmitBtn');
+        const profilePopup = document.getElementById('profilePopup');
+        const profileNickname = document.getElementById('profileNickname');
+        const profileAvatarImg = document.getElementById('profileAvatarImg');
+        const profileError = document.getElementById('profileError');
+        const avatarFileInput = document.getElementById('avatarFile');
+        const saveProfileBtn = document.getElementById('saveProfileBtn');
+        
+        let currentUser = null;
+        
+        // ---- 显示/隐藏登录弹窗 ----
+        function showLoginPopup() {
+            loginPopup.style.display = 'flex';
+            loginError.textContent = '';
+            loginEmail.value = '';
+            loginPassword.value = '';
+        }
+        function hideLoginPopup() {
+            loginPopup.style.display = 'none';
+        }
+        
+        // ---- 显示/隐藏个人信息弹窗 ----
+        function showProfilePopup() {
+            if (!currentUser) return;
+            profileNickname.value = currentUser.user_metadata?.nickname || '';
+            const avatarUrl = currentUser.user_metadata?.avatar_url || '';
+            profileAvatarImg.src = avatarUrl || '';
+            profileError.textContent = '';
+            profilePopup.style.display = 'flex';
+        }
+        function hideProfilePopup() {
+            profilePopup.style.display = 'none';
+        }
+        
+        // ---- 头像预览 ----
+        function previewAvatar(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                profileAvatarImg.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        // ---- 注册 ----
+        async function handleSignup() {
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value.trim();
+            if (!email || !password) {
+                loginError.textContent = '请填写邮箱和密码';
+                return;
+            }
+            const { data, error } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    emailRedirectTo: window.location.origin + window.location.pathname
+                }
+            });
+            if (error) {
+                loginError.textContent = error.message;
+            } else {
+                loginError.textContent = '✅ 注册成功！请查收验证邮件。';
+                loginError.style.color = '#22c55e';
+                setTimeout(() => {
+                    hideLoginPopup();
+                    loginError.style.color = '#ff6b6b';
+                }, 2000);
+            }
+        }
+        
+        // ---- 登录 ----
+        async function handleLogin() {
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value.trim();
+            if (!email || !password) {
+                loginError.textContent = '请填写邮箱和密码';
+                return;
+            }
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            if (error) {
+                loginError.textContent = error.message;
+            } else {
+                loginError.textContent = '✅ 登录成功！';
+                loginError.style.color = '#22c55e';
+                setTimeout(() => {
+                    hideLoginPopup();
+                    loginError.style.color = '#ff6b6b';
+                }, 1000);
+            }
+        }
+        
+        // ---- 退出 ----
+        async function handleLogout() {
+            await supabase.auth.signOut();
+        }
+        
+        // ---- 保存个人信息 ----
+        async function saveProfile() {
+            if (!currentUser) return;
+            const nickname = profileNickname.value.trim();
+            let avatarUrl = currentUser.user_metadata?.avatar_url || '';
+            
+            const file = avatarFileInput.files[0];
+            if (file) {
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${currentUser.id}_${Date.now()}.${fileExt}`;
+                const { data, error } = await supabase.storage
+                    .from('avatars')
+                    .upload(fileName, file, { upsert: true });
+                if (error) {
+                    profileError.textContent = '头像上传失败：' + error.message;
+                    return;
+                }
+                const { data: urlData } = supabase.storage
+                    .from('avatars')
+                    .getPublicUrl(fileName);
+                avatarUrl = urlData.publicUrl;
+            }
+            
+            const updates = {
+                nickname: nickname || '用户',
+                avatar_url: avatarUrl
+            };
+            const { data, error } = await supabase.auth.updateUser({
+                data: updates
+            });
+            if (error) {
+                profileError.textContent = '保存失败：' + error.message;
+            } else {
+                profileError.textContent = '✅ 保存成功！';
+                profileError.style.color = '#22c55e';
+                currentUser = data.user;
+                updateUI(currentUser);
+                setTimeout(() => {
+                    hideProfilePopup();
+                    profileError.style.color = '#ff6b6b';
+                }, 1500);
+            }
+        }
+        
+        // ---- 更新界面 ----
+        function updateUI(user) {
+            if (user) {
+                currentUser = user;
+                loginBtn.style.display = 'none';
+                userInfoDisplay.style.display = 'inline-flex';
+                const nickname = user.user_metadata?.nickname || user.email || '用户';
+                userDisplayName.textContent = nickname;
+                const avatar = user.user_metadata?.avatar_url || '';
+                if (avatar) {
+                    userAvatar.innerHTML = `<img src="${avatar}" alt="头像">`;
+                } else {
+                    userAvatar.innerHTML = '👤';
+                }
+            } else {
+                currentUser = null;
+                loginBtn.style.display = 'inline';
+                userInfoDisplay.style.display = 'none';
+                userAvatar.innerHTML = '👤';
+            }
+        }
+        
+        // ---- 监听登录状态 ----
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (session) {
+                updateUI(session.user);
+            } else {
+                updateUI(null);
+            }
+        });
+        
+        // ---- 页面加载时检查会话 ----
+        supabase.auth.getSession().then(({ data }) => {
+            if (data.session) {
+                updateUI(data.session.user);
+            } else {
+                updateUI(null);
+            }
+        });
+        
+        // ---- 绑定事件 ----
+        // 登录按钮（已用 onclick 绑定，无需重复绑定）
+        // 登录提交
+        loginSubmitBtn.addEventListener('click', handleLogin);
+        // 注册提交
+        signupSubmitBtn.addEventListener('click', handleSignup);
+        // 保存个人信息
+        saveProfileBtn.addEventListener('click', saveProfile);
+        
+        // 暴露给全局
+        window.showLoginPopup = showLoginPopup;
+        window.hideLoginPopup = hideLoginPopup;
+        window.handleLogin = handleLogin;
+        window.handleSignup = handleSignup;
+        window.handleLogout = handleLogout;
+        window.showProfilePopup = showProfilePopup;
+        window.hideProfilePopup = hideProfilePopup;
+        window.saveProfile = saveProfile;
+        window.previewAvatar = previewAvatar;
     </script>
 </body>
 </html>
