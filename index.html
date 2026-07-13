@@ -1413,7 +1413,7 @@
         })();
     </script>
 
-<!-- ========== 新增：AI 悬浮球聊天功能（Pollinations.ai 纯前端） ========== -->
+<!-- ========== 新增：AI 悬浮球聊天功能（Pollinations.ai + 自动翻译） ========== -->
 <div class="ai-float-btn" id="aiFloatBtn" title="AI 助手">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 2C6.48 2 2 6.48 2 12c0 1.92.56 3.72 1.52 5.28L2 22l4.72-1.52A9.96 9.96 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.48 0-2.88-.4-4.08-1.08l-2.92.92.92-2.92A7.96 7.96 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/>
@@ -1425,11 +1425,11 @@
 
 <div class="ai-chat-box" id="aiChatBox">
     <div class="ai-chat-header">
-        <span>🤖 AI 智障助手</span>
+        <span>🤖 AI 智能助手</span>
         <span id="aiCloseBtn" title="关闭">✕</span>
     </div>
     <div class="ai-chat-messages" id="aiMessages">
-        <div class="ai-chat-empty">👋 别问太难的问题！</div>
+        <div class="ai-chat-empty">👋 问我任何问题吧！</div>
     </div>
     <div class="ai-chat-input-row">
         <input type="text" id="aiInput" placeholder="输入你的问题..." />
@@ -1470,58 +1470,69 @@
             return div;
         }
 
-async function sendMessage() {
-    const msg = inputEl.value.trim();
-    if (!msg) return;
+        async function sendMessage() {
+            const msg = inputEl.value.trim();
+            if (!msg) return;
 
-    addMessage(msg, 'user');
-    inputEl.value = '';
-    inputEl.disabled = true;
-    sendBtn.disabled = true;
+            addMessage(msg, 'user');
+            inputEl.value = '';
+            inputEl.disabled = true;
+            sendBtn.disabled = true;
 
-    const typingMsg = addMessage('...', 'bot');
-    typingMsg.querySelector('.bubble').classList.add('typing');
+            const typingMsg = addMessage('...', 'bot');
+            typingMsg.querySelector('.bubble').classList.add('typing');
 
-    try {
-        // ===== 第一步：将中文翻译成英文 =====
-        let query = msg; // 默认用原始内容
-        try {
-            const translateRes = await fetch('https://libretranslate.de/translate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    q: msg,
-                    source: 'zh',
-                    target: 'en'
-                })
-            });
-            const translateData = await translateRes.json();
-            if (translateData.translatedText) {
-                query = translateData.translatedText;
-                console.log('翻译结果:', query);
+            try {
+                // ===== 第一步：将中文翻译成英文 =====
+                let query = msg;
+                try {
+                    const translateRes = await fetch('https://libretranslate.de/translate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            q: msg,
+                            source: 'zh',
+                            target: 'en'
+                        })
+                    });
+                    const translateData = await translateRes.json();
+                    if (translateData.translatedText) {
+                        query = translateData.translatedText;
+                        console.log('翻译结果:', query);
+                    }
+                } catch (transError) {
+                    console.warn('翻译失败，使用原始内容:', transError);
+                }
+
+                // ===== 第二步：用翻译后的文本请求 Pollinations.ai =====
+                const response = await fetch(`https://text.pollinations.ai/openai?message=${encodeURIComponent(query)}`);
+                const reply = await response.text();
+
+                typingMsg.remove();
+                addMessage(reply || '抱歉，没有回复。', 'bot');
+
+            } catch (error) {
+                typingMsg.remove();
+                addMessage('❌ 请求失败：' + (error.message || '请检查网络'), 'bot');
+                console.error('错误:', error);
+            } finally {
+                inputEl.disabled = false;
+                sendBtn.disabled = false;
+                inputEl.focus();
             }
-        } catch (transError) {
-            console.warn('翻译失败，使用原始中文:', transError);
-            // 翻译失败就继续用原始中文
         }
 
-        // ===== 第二步：用翻译后的文本请求 Pollinations.ai =====
-        const response = await fetch(`https://text.pollinations.ai/openai?message=${encodeURIComponent(query)}`);
-        const reply = await response.text();
+        floatBtn.addEventListener('click', toggleChat);
+        closeBtn.addEventListener('click', closeChat);
+        sendBtn.addEventListener('click', sendMessage);
+        inputEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage(); });
 
-        typingMsg.remove();
+        document.addEventListener('click', function(e) {
+            if (chatBox.classList.contains('active') && !chatBox.contains(e.target) && !floatBtn.contains(e.target)) {
+                closeChat();
+            }
+        });
 
-        // 如果回复是英文，可以尝试再翻译回中文（可选）
-        // 但 Pollinations 的回复通常能直接显示，就不额外处理了
-        addMessage(reply || '抱歉，没有回复。', 'bot');
-
-    } catch (error) {
-        typingMsg.remove();
-        addMessage('❌ 请求失败：' + (error.message || '请检查网络'), 'bot');
-        console.error('错误:', error);
-    } finally {
-        inputEl.disabled = false;
-        sendBtn.disabled = false;
-        inputEl.focus();
-    }
-}
+        console.log('🤖 AI 已启动（Pollinations.ai + 自动翻译）');
+    })();
+</script>
