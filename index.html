@@ -1425,7 +1425,7 @@
 
 <div class="ai-chat-box" id="aiChatBox">
     <div class="ai-chat-header">
-        <span>🤖 小智障</span>   <!-- 这里改了名字 -->
+        <span>🤖 小智障</span>
         <span id="aiCloseBtn" title="关闭">✕</span>
     </div>
     <div class="ai-chat-messages" id="aiMessages">
@@ -1439,33 +1439,7 @@
 
 <script>
     (function() {
-        <!-- ========== 新增：AI 悬浮球聊天功能（Agnes AI 自定义性格） ========== -->
-<div class="ai-float-btn" id="aiFloatBtn" title="AI 助手">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2C6.48 2 2 6.48 2 12c0 1.92.56 3.72 1.52 5.28L2 22l4.72-1.52A9.96 9.96 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.48 0-2.88-.4-4.08-1.08l-2.92.92.92-2.92A7.96 7.96 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/>
-        <circle cx="8" cy="12" r="1.5" fill="white"/>
-        <circle cx="16" cy="12" r="1.5" fill="white"/>
-        <path d="M8.5 16c.5 1.5 2 2.5 3.5 2.5s3-1 3.5-2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    </svg>
-</div>
-
-<div class="ai-chat-box" id="aiChatBox">
-    <div class="ai-chat-header">
-        <span>🤖 小智障</span>   <!-- 名字保留你改的 -->
-        <span id="aiCloseBtn" title="关闭">✕</span>
-    </div>
-    <div class="ai-chat-messages" id="aiMessages">
-        <div class="ai-chat-empty">👋 快来和小智障聊天吧！</div>
-    </div>
-    <div class="ai-chat-input-row">
-        <input type="text" id="aiInput" placeholder="输入你的问题..." />
-        <button id="aiSendBtn">发送</button>
-    </div>
-</div>
-
-<script>
-    (function() {
-    
+        
         const AGNES_API_KEY = 'sk-GEU0wVNG5vM17pm4xUqAZg0pIeArQ7eD0AseLGCr6ceITgp2';
 
         const floatBtn = document.getElementById('aiFloatBtn');
@@ -1477,7 +1451,9 @@
 
         function toggleChat() {
             chatBox.classList.toggle('active');
-            if (chatBox.classList.contains('active')) inputEl.focus();
+            if (chatBox.classList.contains('active')) {
+                inputEl.focus();
+            }
         }
 
         function closeChat() {
@@ -1489,7 +1465,7 @@
             const empty = messages.querySelector('.ai-chat-empty');
             if (empty) empty.remove();
             const div = document.createElement('div');
-            div.className = `ai-msg ${type}`;
+            div.className = 'ai-msg ' + type;
             const bubble = document.createElement('div');
             bubble.className = 'bubble';
             bubble.textContent = text;
@@ -1516,16 +1492,19 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${AGNES_API_KEY}`
+                        'Authorization': 'Bearer ' + AGNES_API_KEY
                     },
                     body: JSON.stringify({
                         model: 'agnes-2.0-flash',
                         messages: [
-                            { 
-                                role: 'system', 
-                                content: `你是一个名叫“小智障”的AI助手，性格幽默，说话喜欢用语气词，回答简短口语化，性格暴躁，急性子，不喜欢别人骂他，口头禅：“我拿那个筷子加那个水泥”`
+                            {
+                                role: 'system',
+                                content: '你是一个名叫“小智障”的AI助手，性格幽默，说话简短，口头禅：“我拿那个筷子加那个水泥”。'
                             },
-                            { role: 'user', content: msg }
+                            {
+                                role: 'user',
+                                content: msg
+                            }
                         ]
                     })
                 });
@@ -1542,6 +1521,10 @@
             } catch (error) {
                 typingMsg.remove();
                 let errMsg = '❌ 请求失败：' + (error.message || '请检查网络');
+                // 如果报错包含 "Failed to fetch"，提示跨域
+                if (error.message && error.message.includes('Failed to fetch')) {
+                    errMsg += '（可能是跨域问题，试试用 Chrome 或 Edge 浏览器）';
+                }
                 addMessage(errMsg, 'bot');
                 console.error('Agnes AI 错误:', error);
             } finally {
@@ -1554,7 +1537,9 @@
         floatBtn.addEventListener('click', toggleChat);
         closeBtn.addEventListener('click', closeChat);
         sendBtn.addEventListener('click', sendMessage);
-        inputEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage(); });
+        inputEl.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
 
         document.addEventListener('click', function(e) {
             if (chatBox.classList.contains('active') && !chatBox.contains(e.target) && !floatBtn.contains(e.target)) {
@@ -1562,6 +1547,6 @@
             }
         });
 
-        console.log('🤖 小智障已启动（自定义性格）');
+        console.log('🤖 小智障已启动（Agnes API）');
     })();
 </script>
