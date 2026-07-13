@@ -1413,7 +1413,7 @@
         })();
     </script>
 
- <!-- ========== 新增：AI 悬浮球聊天功能（KeylessAI 纯前端） ========== -->
+<!-- ========== 新增：AI 悬浮球聊天功能（Pollinations.ai 纯前端） ========== -->
 <div class="ai-float-btn" id="aiFloatBtn" title="AI 助手">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 2C6.48 2 2 6.48 2 12c0 1.92.56 3.72 1.52 5.28L2 22l4.72-1.52A9.96 9.96 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.48 0-2.88-.4-4.08-1.08l-2.92.92.92-2.92A7.96 7.96 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/>
@@ -1425,11 +1425,11 @@
 
 <div class="ai-chat-box" id="aiChatBox">
     <div class="ai-chat-header">
-        <span>🤖 AI 智能助手</span>
+        <span>🤖 AI 智障助手</span>
         <span id="aiCloseBtn" title="关闭">✕</span>
     </div>
     <div class="ai-chat-messages" id="aiMessages">
-        <div class="ai-chat-empty">👋 问我任何问题吧！</div>
+        <div class="ai-chat-empty">👋 别问太难的问题！</div>
     </div>
     <div class="ai-chat-input-row">
         <input type="text" id="aiInput" placeholder="输入你的问题..." />
@@ -1483,27 +1483,15 @@
             typingMsg.querySelector('.bubble').classList.add('typing');
 
             try {
-                // ★★★ 使用 KeylessAI 免费 API（POST，无 Key，无跨域） ★★★
-                const response = await fetch('https://keylessai.thryx.workers.dev/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        model: 'gpt-4o-mini',   // 支持 gpt-4o, claude-3-5-sonnet-latest 等
-                        messages: [
-                            { role: 'user', content: msg }
-                        ]
-                    })
-                });
-                const data = await response.json();
-                const reply = data.choices?.[0]?.message?.content || '抱歉，我没有理解。';
+                // ★★★ 使用 Pollinations.ai 免费 API（GET，稳定无跨域） ★★★
+                const response = await fetch(`https://text.pollinations.ai/openai?message=${encodeURIComponent(msg)}`);
+                const reply = await response.text();
                 typingMsg.remove();
-                addMessage(reply, 'bot');
+                addMessage(reply || '抱歉，没有回复。', 'bot');
             } catch (error) {
                 typingMsg.remove();
-                addMessage('❌ 网络错误，请稍后重试。', 'bot');
-                console.error('KeylessAI 错误:', error);
+                addMessage('❌ 请求失败：' + (error.message || '请检查网络'), 'bot');
+                console.error('Pollinations 错误:', error);
             } finally {
                 inputEl.disabled = false;
                 sendBtn.disabled = false;
@@ -1522,6 +1510,6 @@
             }
         });
 
-        console.log('🤖 AI 已启动（KeylessAI 驱动，无 Key）');
+        console.log('🤖 AI 已启动（Pollinations.ai 驱动）');
     })();
 </script>
